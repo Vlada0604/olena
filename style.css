@@ -1,3 +1,4 @@
+/* CSS повністю як ти скинула, з доданими стилями для remove-btn та оптимізацією */
 
 :root {
     --dark-bg: #1e1e1e;
@@ -33,7 +34,7 @@ h2 { text-align: center; text-transform: uppercase; margin-bottom: 40px; font-si
     display: flex; 
     justify-content: center; 
     gap: 20px; 
-    max-width: 1200px; /* Збільшив max-width, щоб було місце для 4-х товарів */
+    max-width: 1200px; 
     margin: 0 auto; 
     flex-wrap: wrap; 
 }
@@ -71,6 +72,18 @@ h2 { text-align: center; text-transform: uppercase; margin-bottom: 40px; font-si
 .footer-col ul { list-style: none; }
 .footer-col ul li { margin-bottom: 8px; cursor: pointer; transition: color 0.3s; }
 .footer-col ul li:hover { color: var(--main-text); }
+
+/* === ОНОВЛЕННЯ ДЛЯ КОНТАКТІВ У ФУТЕРІ === */
+.footer-col a {
+    color: var(--main-text); /* Робимо текст білим */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.footer-col a:hover {
+    color: var(--accent-color); /* Колір при наведенні курсору */
+    text-decoration: underline;
+}
+/* ========================================= */
 
 
 /* --- Стилі для МОДАЛЬНОГО ВІКНА (ОФОРМЛЕННЯ ЗАМОВЛЕННЯ) --- */
