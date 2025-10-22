@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // 1. ЛОГІКА ДОДАВАННЯ У КОШИК (працює на catalog.html)
   document.querySelectorAll(".buy-button").forEach(btn => {
     btn.addEventListener("click", (e) => {
-      // ✅ ВИПРАВЛЕНО: Додаємо перевірку, щоб ігнорувати кнопки видалення АБО кнопку оформлення замовлення
-      if(btn.classList.contains('remove-btn') || e.target.closest('#cartItems') || btn.id === 'checkoutBtn') {
+      // ✅ ВИПРАВЛЕНО: Обробляємо лише кнопки додавання та видалення
+      if(btn.classList.contains('remove-btn') || e.target.closest('#cartItems')) {
         return; 
       }
       
@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("cart", JSON.stringify(cart));
 
       updateCartCount();
+      // Тут спливає повідомлення про додавання. Інші кнопки його не викликають.
       alert(`🎉 ${name} додано в кошик!`);
     });
   });
@@ -33,7 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // 2. ЛОГІКА ВІДОБРАЖЕННЯ ТА ВИДАЛЕННЯ (працює на cart.html)
   const cartItems = document.getElementById("cartItems");
   const totalPriceEl = document.getElementById("totalPrice");
-  const checkoutBtn = document.getElementById("checkoutBtn");
+  // checkoutBtn все ще потрібен, щоб приєднати до нього обробник кліку (пункт 3)
+  const checkoutBtn = document.getElementById("checkoutBtn"); 
   
   // Функція для відображення кошика
   function renderCart() {
@@ -92,7 +94,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Відкриття модального вікна
   if (checkoutBtn) {
-    checkoutBtn.addEventListener("click", () => {
+    // Обробник додається безпосередньо до кнопки #checkoutBtn, 
+    // яка більше не має класу .buy-button, тому конфлікту немає
+    checkoutBtn.addEventListener("click", () => { 
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
       if(cart.length === 0){
         alert("Ваш кошик порожній!");
