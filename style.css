@@ -59,8 +59,20 @@ h2 { text-align: center; text-transform: uppercase; margin-bottom: 40px; font-si
 .product-name { font-size: 1.2rem; font-weight: 400; margin-bottom: 5px; }
 .product-price { font-size: 1.4rem; font-weight: bold; color: #222; margin-bottom: 10px; }
 
-.buy-button { background-color: var(--buy-button-bg); color: var(--buy-button-text); text-transform: uppercase; padding: 8px 30px; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; letter-spacing: 1px; transition: background-color 0.3s; }
-.buy-button:hover { background-color: #000; }
+/* Стилі для кнопок додавання */
+.buy-button, .checkout-button { 
+    background-color: var(--buy-button-bg); 
+    color: var(--buy-button-text); 
+    text-transform: uppercase; 
+    padding: 8px 30px; 
+    border: none; 
+    border-radius: 20px; 
+    cursor: pointer; 
+    font-weight: bold; 
+    letter-spacing: 1px; 
+    transition: background-color 0.3s; 
+}
+.buy-button:hover, .checkout-button:hover { background-color: #000; }
 
 .remove-btn { background-color: #ff3b30; color: #fff; }
 .remove-btn:hover { background-color: #d32f2f; }
