@@ -11,9 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // 1. ЛОГІКА ДОДАВАННЯ У КОШИК (працює на catalog.html)
   document.querySelectorAll(".buy-button").forEach(btn => {
     btn.addEventListener("click", (e) => {
-      // ✅ ВИПРАВЛЕНО: Додаємо перевірку, щоб не обробляти кнопки видалення
-      if(btn.classList.contains('remove-btn') || e.target.closest('#cartItems')) {
-        // Якщо це кнопка видалення, виходимо
+      // ✅ ВИПРАВЛЕНО: Додаємо перевірку, щоб ігнорувати кнопки видалення АБО кнопку оформлення замовлення
+      if(btn.classList.contains('remove-btn') || e.target.closest('#cartItems') || btn.id === 'checkoutBtn') {
         return; 
       }
       
@@ -27,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("cart", JSON.stringify(cart));
 
       updateCartCount();
-      // ✅ Тільки тут спливає повідомлення про додавання!
       alert(`🎉 ${name} додано в кошик!`);
     });
   });
@@ -39,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Функція для відображення кошика
   function renderCart() {
-    if (!cartItems || !totalPriceEl) return; // Виходимо, якщо елементи не знайдені
+    if (!cartItems || !totalPriceEl) return; 
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     
@@ -67,17 +65,15 @@ document.addEventListener("DOMContentLoaded", () => {
       // Додаємо обробники для кнопок видалення
       document.querySelectorAll(".remove-btn").forEach(btn => {
         btn.addEventListener("click", (e) => {
-          const idToRemove = parseFloat(e.target.dataset.id); // ID товару
+          const idToRemove = parseFloat(e.target.dataset.id); 
           
           let currentCart = JSON.parse(localStorage.getItem("cart")) || [];
           
-          // Знаходимо індекс першого товару з цим ID і видаляємо його
           const index = currentCart.findIndex(item => item.id === idToRemove);
           if (index > -1) {
             currentCart.splice(index, 1);
             localStorage.setItem("cart", JSON.stringify(currentCart));
             
-            // Перерендеримо кошик для оновлення відображення
             renderCart(); 
             updateCartCount();
           }
@@ -86,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Викликаємо відображення кошика при завантаженні cart.html
   renderCart(); 
 
   // 3. ЛОГІКА ОФОРМЛЕННЯ ЗАМОВЛЕННЯ (працює на cart.html)
