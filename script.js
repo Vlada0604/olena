@@ -11,19 +11,23 @@ document.addEventListener("DOMContentLoaded", () => {
   // 1. ЛОГІКА ДОДАВАННЯ У КОШИК (працює на catalog.html)
   document.querySelectorAll(".buy-button").forEach(btn => {
     btn.addEventListener("click", (e) => {
-      // Ігноруємо кнопки, що знаходяться у кошику
-      if(e.target.closest('#cartItems') || btn.classList.contains('remove-btn')) return; 
+      // ✅ ВИПРАВЛЕНО: Додаємо перевірку, щоб не обробляти кнопки видалення
+      if(btn.classList.contains('remove-btn') || e.target.closest('#cartItems')) {
+        // Якщо це кнопка видалення, виходимо
+        return; 
+      }
       
       const name = btn.dataset.name;
       const price = parseInt(btn.dataset.price);
       const img = btn.dataset.img;
 
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      // Додаємо ID для унікальності (на основі часу, щоб було простіше видаляти)
+      // Додаємо ID для унікальності
       cart.push({ id: Date.now() + Math.random(), name, price, img }); 
       localStorage.setItem("cart", JSON.stringify(cart));
 
       updateCartCount();
+      // ✅ Тільки тут спливає повідомлення про додавання!
       alert(`🎉 ${name} додано в кошик!`);
     });
   });
@@ -35,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Функція для відображення кошика
   function renderCart() {
-    if (!cartItems || !totalPriceEl) return; // Виходимо, якщо елементи не знайдені (наприклад, ми на index.html)
+    if (!cartItems || !totalPriceEl) return; // Виходимо, якщо елементи не знайдені
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     
